@@ -1,0 +1,71 @@
+<html>
+
+<head>
+    {% load static %}
+<tittle></tittle>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<style>
+
+    .nav-link{
+        color:white;
+        margin-right:4px;
+    }
+</style>
+
+</head>
+<body>
+     
+
+     <nav class="navbar navbar-expand-sm" style="background-color:skyblue">
+        <a class="navbar-brand text-white pl-5 font-weight-bold" style="font-family:'Monotype Corsiva'; font-size:30px" ></a>
+
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" style="margin-right:400px"></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'provider_home' %}" >Home</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link"  href="{% url 'create_service' %}"> Create Service</a>
+            </li>
+
+            
+
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'view_services' %}" >view_services</a>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Service Request</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="{% url 'request' %}">Pending</a>
+                    <a class="dropdown-item" href="{% url 'request_accept' %}">Accepted</a>
+                    <a class="dropdown-item" href="{% url 'request_reject' %}">Rejected</a>
+                    <a class="dropdown-item" href="{% url 'request_all' %}">All Providers</a>
+                </div>
+            </li>
+
+            
+                
+
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'provider_passwordchange' %}" >Change Password</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'provider_logout' %}" >Logout</a>
+            </li>
+           
+            
+        </ul>
+    <a class="navbar-brand text-black pl-5 font-black-bold" style="font-family:'Monotype Corsiva'; font-size:25px" >WELCOME {{request.user.first_name}} {{request.user.last_name}}</a>
+    </nav>
+   </body>
+
+</html>

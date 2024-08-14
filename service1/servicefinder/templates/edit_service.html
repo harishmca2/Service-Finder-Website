@@ -1,0 +1,125 @@
+<!doctype html>
+{% load static %}
+
+{% block body %}
+
+{% include 'provider_navigation.html' %}
+
+<div style="font-family: 'Monotype Corsiva'; font-size: 25px; color: darkcyan; background-color: black; font-weight: bold; margin-top: 1%">
+    Edit Services
+</div>
+
+<hr>
+
+<style>
+    /* Custom CSS */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    .form-control {
+        width: 100%;
+        height: 40px;
+        font-size: 16px;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .btn {
+        height: 40px;
+        padding: 0 20px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .btn-primary {
+        background-color: black;
+        color: darkcyan;
+    }
+
+    .btn-primary:hover {
+        background-color: #333;
+    }
+
+    hr {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        border: none;
+        border-top: 1px solid #ccc;
+    }
+
+    div[style] {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+</style>
+
+<form class="container mt-5" onsubmit="return validateForm()" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>Service Name</label>
+            <input type="text" class="form-control" name="service_name" value="{{ service.service_name }}" required>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label>Experience (in Years)</label>
+            <input type="number" class="form-control" name="experience" value="{{ service.experience }}" placeholder="Enter Numbers Only" required>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>Location</label>
+            <input type="text" class="form-control" name="location" value="{{ service.location }}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Description</label>
+        <textarea class="form-control" name="description" rows="3">{{ service.description }}</textarea>
+    </div>
+
+    <input type="submit" value="Submit" class="btn btn-primary my-3" style="width: 200px; background-color: black; color: darkcyan; border: none; height: 40px; cursor: pointer;">
+</form>
+
+{% if error == "no" %}
+<script>
+    alert("Service details have been Successfully Modified!");
+    window.location = "{% url 'view_services' %}";
+</script>
+{% endif %}
+
+{% if error == "yes" %}
+<script>
+    alert("Invalid credentials! Please try again!");
+</script>
+{% endif %}
+
+
+<script>
+    function validateForm() {
+        var experience = document.forms["service"]["experience"].value;
+        if (experience >= 51) {
+            alert("Experience should be below 51 years.");
+            return false;
+        }
+    }
+</script>
+
+{% endblock %}

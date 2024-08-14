@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% include 'admin_navigation.html' %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        /* Custom CSS styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px 0 rgba(0,0,0,0.1);
+        }
+
+        .mydiv {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+
+        .mydiv:hover {
+            box-shadow: 0 0 20px 0 rgba(0,0,0,0.3);
+            transform: translateY(-10px);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .font-weight-bold {
+            font-weight: bold;
+        }
+
+        .row {
+            margin-top: 30px;
+        }
+    </style>
+    <!-- Assuming FontAwesome CSS is included here -->
+</head>
+<body>
+
+{% load static %}
+
+<div class="container">
+    {% block body %}
+    <div class="row mt-5">
+        <div class="col-sm-6 mydiv">
+            <h4 class="text-center"><i class="fas fa-user"></i> Total Service Providers</h4>
+            <p class="text-center font-weight-bold">{{ pcount }}</p>
+        </div>
+
+        <div class="col-sm-6 mydiv">
+            <h4 class="text-center"><i class="fas fa-user"></i> Total Customers</h4>
+            <p class="text-center font-weight-bold">{{ scount }}</p>
+        </div>
+    </div>
+    {% endblock %}
+</div>
+
+
+
+</body>
+</html>

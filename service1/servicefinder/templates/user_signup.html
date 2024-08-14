@@ -1,0 +1,166 @@
+{% load static %}
+
+{% block body %}
+
+{% include 'navigation.html' %}
+
+<script>
+    function checkpass() {
+        if (document.signup.pwd.value != document.signup.cpwd.value) {
+            alert('Password Does not Match');
+            document.signup.cpwd.focus();
+            return false;
+        }
+        
+        var contact = document.signup.contact.value;
+        if (!/^\d{10}$/.test(contact)) {
+            alert('Please enter a 10-digit contact number.');
+            document.signup.contact.focus();
+            return false;
+        }
+
+        return true;
+    }
+</script>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+    }
+
+    .marquee {
+        font-family: 'Monotype Corsiva';
+        font-size: 25px;
+        color: darkcyan;
+        background-color: black;
+        font-weight: bold;
+        margin-top: 1%;
+        padding: 10px; /* Added padding for better appearance */
+    }
+
+    .container {
+        margin-top: 5%;
+        max-width: 600px;
+        padding: 20px;
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-control {
+        margin-bottom: 10px;
+        height: 40px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 8px;
+    }
+
+    .btn-primary {
+        margin-top: 2%;
+        width: 200px;
+        height: 40px;
+        color: white;
+        background-color: darkcyan;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .btn-primary:hover {
+        background-color: #008080; /* Darker shade of cyan for hover effect */
+    }
+
+    .form-group {
+        margin-bottom: 20px; /* Increased space between form groups */
+    }
+
+    .custom-control {
+        margin-right: 20px; /* Increased margin between radio buttons */
+    }
+</style>
+
+<div class="marquee">
+    User SignUp
+</div>
+<hr>
+
+<form class="container" onsubmit="return checkpass()" method="post" name="signup" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <div class="form-group">
+        <label>First Name</label>
+        <input type="text" class="form-control" name="fname" placeholder="Enter First Name" required>
+    </div>
+    <div class="form-group">
+        <label>Last Name</label>
+        <input type="text" class="form-control" name="lname" placeholder="Enter Last Name" required>
+    </div>
+
+    <div class="form-group">
+        <label>Contact</label>
+        <input type="text" class="form-control" name="contact" placeholder="Enter Contact Number" required>
+    </div>
+
+    <div class="form-group">
+        <label>Email ID</label>
+        <input type="email" class="form-control" name="email" placeholder="Enter Email ID" required>
+    </div>
+
+    <div class="form-group">
+        <label>Gender</label>
+        <div class="custom-control custom-radio">
+            <input type="radio" id="customRadioInline1" name="gender" class="custom-control-input" value="Male" required>
+            <label class="custom-control-label" for="customRadioInline1">Male</label>
+        </div>
+        <div class="custom-control custom-radio">
+            <input type="radio" id="customRadioInline2" name="gender" class="custom-control-input" value="Female" required>
+            <label class="custom-control-label" for="customRadioInline2">Female</label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Image</label>
+        <input type="file" class="form-control-file" name="image" required>
+    </div>
+
+    <div class="form-group">
+        <label>Address</label>
+        <textarea class="form-control" name="address" rows="4" placeholder="Enter Address"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label>Password</label>
+        <input type="password" class="form-control" name="pwd" placeholder="Enter Password" required>
+    </div>
+    <div class="form-group">
+        <label>Confirm Password</label>
+        <input type="password" class="form-control" name="cpwd" placeholder="Repeat Password" required>
+    </div>
+
+    <input type="submit" value="Submit" class="btn btn-primary">
+</form>
+
+{% if error == "no" %}
+<script>
+    alert("Signup Successful!");
+    window.location = "{% url 'user_login' %}";
+</script>
+{% endif %}
+
+{% if error == "yes" %}
+<script>
+    alert("Something went wrong. Please try again!");
+</script>
+{% endif %}
+
+{% if error %}
+<script>
+    alert("{{ error }}");
+</script>
+{% endif %}
+
+{% endblock %}

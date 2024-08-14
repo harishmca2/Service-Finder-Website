@@ -1,0 +1,110 @@
+{% block body %}
+
+{% include 'provider_navigation.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Service</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .marquee {
+            font-family: 'Monotype Corsiva';
+            font-size: 25px;
+            color: darkcyan;
+            background-color: black;
+            font-weight: bold;
+            margin-top: 1%;
+            padding: 10px; /* Added padding for better appearance */
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        th, td {
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: dodgerblue;
+            border-color: dodgerblue;
+        }
+
+        .btn-danger {
+            color: #fff;
+            background-color: red;
+            border-color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="marquee">
+        View Service
+    </div>
+    <hr>
+
+    {% csrf_token %}
+    <div class="container">
+        <table id="example" class="display">
+            <thead>
+                <tr>
+                    <th>S No</th>
+                    <th>Service Name</th>
+                    <th>Address</th>
+                    <th>Experience</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for service in services %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ service.service_name }}</td>
+                    <td>{{ service.location }}</td>
+                    <td>{{ service.experience }}</td>
+                    
+                    <td>
+                        <a href="{% url 'edit_service' service.id %}" class="btn btn-sm btn-primary">Modify</a>
+                        <a href="{% url 'delete_service1' service.id %}" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+    </script>
+</body>
+
+</html>
+
+{% endblock %}

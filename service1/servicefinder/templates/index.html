@@ -1,0 +1,24 @@
+<!doctype html>
+{% load static %}
+
+{% block body %}
+
+{% include 'navigation.html' %}
+
+<style>
+    .container-fliud {
+        width: 100%;
+        height: auto;
+    }
+
+    .container-fliud img {
+        width: 120%;
+        height: auto;
+    }
+</style>
+
+<div class="container-fliud">
+    <img src="{% static 'image/image2.jpeg' %}" >
+</div>
+
+{% endblock %}

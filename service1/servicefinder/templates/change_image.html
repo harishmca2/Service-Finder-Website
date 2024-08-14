@@ -1,0 +1,108 @@
+{% load static %}
+
+{% block body %}
+
+{% include 'provider_navigation.html' %}
+
+<div class="container-fluid">
+    <marquee style="font-family: 'Monotype Corsiva'; font-size: 25px; color: darkcyan; background-color: black; font-weight: bold; margin-top: 1%">
+        Change Image
+    </marquee>
+
+    <style>
+        /* Custom CSS */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+    
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+        }
+    
+        .form-control {
+            width: 100%;
+            height: 40px;
+            font-size: 16px;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    
+        .btn {
+            height: 40px;
+            padding: 0 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s;
+        }
+    
+        .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+        }
+    
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+    
+        .marquee {
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+    
+        hr {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border: none;
+            border-top: 1px solid #ccc;
+        }
+    </style>
+    
+    <form class="container mt-5" method="post" enctype="multipart/form-data">
+        <hr>
+        {% csrf_token %}
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label>Service Name</label>
+                <input type="text" class="form-control" readonly name="service_name" value="{{ service.service_name }}" required>
+            </div>
+        </div>
+
+        <div class="form-group col-md-6">
+            <img src="{{ service.image1.url }}" width="100" height="100">
+        </div>
+
+        <div class="form-group col-md-6">
+            <label>Image</label>
+            <input type="file" class="form-control" name="image1">
+        </div>
+
+        <input type="submit" value="Submit" class="btn btn-primary my-3" style="width: 200px;">
+    </form>
+
+    {% if error == "no" %}
+    <script>
+        alert("Image has been updated successfully!");
+        window.location = "{% url 'change_image' service.id %}";
+    </script>
+    {% endif %}
+
+    {% if error == "yes" %}
+    <script>
+        alert("Invalid credentials! Please try again!");
+    </script>
+    {% endif %}
+</div>
+
+
+{% endblock %}

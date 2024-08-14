@@ -1,0 +1,86 @@
+{% load static %}
+
+{% block body %}
+
+{% include 'navigation.html' %}
+
+<div class="container-fluid">
+    <!-- <img style="height:450px;width:100%"> -->
+</div>
+
+<div style="font-family:'Monotype Corsiva'; font-size:25px; color:darkcyan; background-color:black; font-weight:bold; text-align:center; padding:10px; margin-top:1%">
+    User Login
+</div>
+<hr>
+
+<form class="container mt-5" method="post">
+    {% csrf_token %}
+
+    <label>User Name</label>
+    <input type="text" class="form-control" name="uname" placeholder="Enter Email ID">
+
+    <label>Password</label>
+    <input type="password" class="form-control" name="pwd" placeholder="Enter Password">
+
+    <input type="submit" value="Login" class="btn btn-primary" style="margin-top:2%; color:darkcyan; background-color:black; height:40px;">
+    <a href="{% url 'user_signup' %}" class="btn btn-primary" style="margin-top:2%; color:darkcyan; background-color:black; height:40px;">CREATE AN ACCOUNT?</a>
+</form>
+
+{% if error == "no" %}
+<script>
+    alert("Login Successful!");
+    window.location = "{% url 'user_home' %}";
+</script>
+{% endif %}
+
+{% if error == "yes" %}
+<script>
+    alert("Something went wrong. Please try again!");
+</script>
+{% endif %}
+
+<style>
+    /* Custom CSS */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 20px 0 rgba(0,0,0,0.1);
+    }
+
+    .form-control {
+        width: 100%;
+        height: 40px;
+        font-size: 16px;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .btn-primary {
+        background-color: black;
+        color: darkcyan;
+        border: none;
+        height: 40px;
+        padding: 0 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    hr {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        border: none;
+        border-top: 1px solid #ccc;
+    }
+</style>
+
+{% endblock %}

@@ -1,0 +1,103 @@
+<!doctype html>
+{% load static %}
+
+{% block body %}
+
+{% include 'provider_navigation.html' %}
+
+<marquee style="font-family: 'Monotype Corsiva'; font-size: 25px; color: darkcyan; background-color: black; font-weight: bold; margin-top: 1%">
+     Service Request Pending List
+</marquee>
+<hr>
+
+<style>
+    /* Custom CSS */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    .form-control {
+        width: 100%;
+        height: 40px;
+        font-size: 16px;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .btn {
+        height: 40px;
+        padding: 0 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border: none;
+        transition: background-color 0.3s;
+    }
+
+    .btn-primary {
+        background-color: black;
+        color: darkcyan;
+    }
+
+    .btn-primary:hover {
+        background-color: #333;
+    }
+
+    hr {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        border: none;
+        border-top: 1px solid #ccc;
+    }
+
+    marquee {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+</style>
+<form class="container mt-5" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <div class="form-group">
+        <label>Customer Name</label>
+        <input type="text" class="form-control" name="uname" value="{{ order.customer.user.first_name }} {{ order.customer.user.last_name }}" readonly>
+    </div>
+
+    <div class="form-group">
+        <label>Status</label>
+        <select class="form-control" name="status">
+            <option value="Accept">Accept</option>
+            <option value="Reject">Reject</option>
+        </select>
+    </div>
+
+    <input type="submit" value="Submit" class="btn btn-primary" style="margin-top: 2%; color: darkcyan; background-color: black; height: 40px;">
+</form>
+
+{% if error == "no" %}
+<script>
+    alert("Status Changed Successfully!");
+    window.location = "{% url 'request' %}";
+</script>
+{% endif %}
+
+{% if error == "yes" %}
+<script>
+    alert("Something went wrong. Please try again!");
+</script>
+{% endif %}
+
+
+
+{% endblock %}

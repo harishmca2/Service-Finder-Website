@@ -1,0 +1,115 @@
+{% load static %}
+
+{% block body %}
+
+{% include 'provider_navigation.html' %}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+        margin-top: 20px; /* Adjust margin as needed */
+    }
+
+    th, td {
+        padding: 8px;
+        border: 1px solid #ddd;
+        text-align: center;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 6px 12px;
+        margin-bottom: 0;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.42857143;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        cursor: pointer;
+        background-image: none;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        color: #fff;
+    }
+
+    .btn-success {
+        background-color: #5cb85c;
+        border-color: #4cae4c;
+    }
+
+    .btn-danger {
+        background-color: #d9534f;
+        border-color: #d43f3a;
+    }
+
+    /* Example marquee styles */
+    marquee {
+        font-family: 'Monotype Corsiva';
+        font-size: 25px;
+        color: darkcyan;
+        background-color: black;
+        font-weight: bold;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding: 5px;
+        display: block;
+    }
+</style>
+
+<marquee>My Service Request</marquee>
+<hr>
+<div class="container">
+    <table class="custom-table" id="example">
+        <thead>
+            <tr>
+                <th>S No</th>
+                <th>Customer Name</th>
+                <th>Customer Contact</th>
+                <th>Customer Email ID</th>
+                <th>Requested Service</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in service_requests %}
+                {% if request.user.id == i.serviceman.user.id %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ i.customer.user.first_name }} {{ i.customer.user.last_name }}</td>
+                        <td>{{ i.customer.mobile }}</td>
+                        <td>{{ i.customer.user.username }}</td>
+                        <td>{{ i.service.service_name }}</td>
+                        <td>{{ i.apply_date }}</td>
+                        <td>{{ i.status }}</td>
+                        <td>
+                            <a href="{% url 'changecustomer_status' i.id %}" class="btn btn-success btn-sm">Change Status</a>
+                            <a href="{% url 'delete_request' i.id %}" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable();
+    });
+</script>
+
+{% endblock %}
